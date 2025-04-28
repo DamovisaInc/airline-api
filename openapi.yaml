@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: Airline Booking API
+  version: 1.0.0
+  description: Simple API for airline booking, airport lookup, and flight search
+servers:
+  - url: http://localhost:3000
+paths:
+  /airports:
+    get:
+      summary: List all airports
+      responses:
+        '200':
+          description: List of airports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airport'
+  /airports/{code}/destinations:
+    get:
+      summary: List destination airports from a departure code
+      parameters:
+        - in: path
+          name: code
+          schema:
+            type: string
+          required: true
+          description: Departure airport code
+      responses:
+        '200':
+          description: List of destination airports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airport'
+  /flights:
+    get:
+      summary: Get flight options
+      parameters:
+        - in: query
+          name: from
+          schema:
+            type: string
+          required: true
+          description: Departure airport code
+        - in: query
+          name: to
+          schema:
+            type: string
+          required: true
+          description: Destination airport code
+        - in: query
+          name: departure
+          schema:
+            type: string
+            format: date
+          required: false
+          description: Departure date (YYYY-MM-DD)
+        - in: query
+          name: returnDate
+          schema:
+            type: string
+            format: date
+          required: false
+          description: Return date (YYYY-MM-DD)
+      responses:
+        '200':
+          description: Flight options
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flights:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Flight'
+                  returnFlights:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Flight'
+  /book:
+    post:
+      summary: Book a flight
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fromDate:
+                  type: string
+                  format: date
+                toDate:
+                  type: string
+                  format: date
+                outboundFlightNumber:
+                  type: string
+                returnFlightNumber:
+                  type: string
+                passengerId:
+                  type: string
+              required:
+                - fromDate
+                - outboundFlightNumber
+                - passengerId
+      responses:
+        '200':
+          description: Booking confirmation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  fromDate:
+                    type: string
+                    format: date
+                  toDate:
+                    type: string
+                    format: date
+                  outboundFlightNumber:
+                    type: string
+                  returnFlightNumber:
+                    type: string
+                  passengerId:
+                    type: string
+components:
+  schemas:
+    Airport:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+    Flight:
+      type: object
+      properties:
+        flightNumber:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        departure:
+          type: string
+          format: date-time
+        arrival:
+          type: string
+          format: date-time
+        price:
+          type: number

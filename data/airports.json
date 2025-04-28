@@ -1,0 +1,19 @@
+{
+  "airports": [
+    { "code": "JFK", "name": "John F. Kennedy International Airport", "city": "New York", "country": "USA" },
+    { "code": "LAX", "name": "Los Angeles International Airport", "city": "Los Angeles", "country": "USA" },
+    { "code": "ORD", "name": "O'Hare International Airport", "city": "Chicago", "country": "USA" },
+    { "code": "LHR", "name": "Heathrow Airport", "city": "London", "country": "UK" },
+    { "code": "CDG", "name": "Charles de Gaulle Airport", "city": "Paris", "country": "France" },
+    { "code": "ATL", "name": "Hartsfield–Jackson Atlanta International Airport", "city": "Atlanta", "country": "USA" },
+    { "code": "DFW", "name": "Dallas/Fort Worth International Airport", "city": "Dallas", "country": "USA" },
+    { "code": "DEN", "name": "Denver International Airport", "city": "Denver", "country": "USA" },
+    { "code": "SFO", "name": "San Francisco International Airport", "city": "San Francisco", "country": "USA" },
+    { "code": "SEA", "name": "Seattle-Tacoma International Airport", "city": "Seattle", "country": "USA" },
+    { "code": "MIA", "name": "Miami International Airport", "city": "Miami", "country": "USA" },
+    { "code": "FRA", "name": "Frankfurt Airport", "city": "Frankfurt", "country": "Germany" },
+    { "code": "MAD", "name": "Adolfo Suárez Madrid–Barajas Airport", "city": "Madrid", "country": "Spain" },
+    { "code": "NRT", "name": "Narita International Airport", "city": "Tokyo", "country": "Japan" },
+    { "code": "SYD", "name": "Sydney Kingsford Smith Airport", "city": "Sydney", "country": "Australia" }
+  ]
+}
