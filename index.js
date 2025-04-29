@@ -4,11 +4,21 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
+const cors = require('cors');
 
 const app = express();
 const PORT = 3001;
 
 app.use(bodyParser.json());
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || origin.startsWith('http://localhost')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 const airportsPath = path.join(__dirname, 'data', 'airports.json');
 const flightsPath = path.join(__dirname, 'data', 'flights.json');
@@ -30,8 +40,11 @@ app.get('/airports', (req, res) => {
 });
 
 // 2. List destination airports from a departure code
-app.get('/airports/:code/destinations', (req, res) => {
-  const code = req.params.code.toUpperCase();
+app.get('/destinations', (req, res) => {
+  const code = req.query.code?.toUpperCase();
+  if (!code) {
+    return res.status(400).json({ error: 'code query parameter is required' });
+  }
   const flights = getFlights();
   const destinations = flights
     .filter(f => f.from === code)
@@ -66,6 +79,12 @@ app.post('/book', (req, res) => {
     returnFlightNumber: returnFlightNumber || null,
     passengerId
   });
+});
+
+// Endpoint to return the raw OpenAPI YAML spec
+app.get('/spec', (req, res) => {
+  res.type('text/yaml');
+  res.send(fs.readFileSync(path.join(__dirname, 'openapi.yaml'), 'utf8'));
 });
 
 app.listen(PORT, () => {

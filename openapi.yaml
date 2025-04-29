@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: Simple API for airline booking, airport lookup, and flight search
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3001
 paths:
   /airports:
     get:
@@ -18,11 +18,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Airport'
-  /airports/{code}/destinations:
+  /destinations:
     get:
       summary: List destination airports from a departure code
       parameters:
-        - in: path
+        - in: query
           name: code
           schema:
             type: string
